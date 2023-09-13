@@ -10,11 +10,11 @@ const MovieDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
-
+  const param = new URLSearchParams(window.location.search).get("id");
   const fetchComments = async () => {
-    this.setState({ isLoading: true });
+    setIsLoading(true);
     try {
-      let response = await fetch("https://striveschool-api.herokuapp.com/api/books/" + this.props.asin + "/comments/", {
+      let response = await fetch("https://striveschool-api.herokuapp.com/api/books/" + param + "/comments/", {
         headers: {
           Authorization:
             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGY5Y2NhMThkM2Q0OTAwMTRjZmQ3ZmEiLCJpYXQiOjE2OTQwOTI0NTAsImV4cCI6MTY5NTMwMjA1MH0.fgB8DJQ6GZCMZGZ7c_5mcKN-RG4yiVrx-xXRPLfBdG4",
@@ -39,20 +39,15 @@ const MovieDetails = () => {
     }
   };
 
-  useEffect((prevProps) => {
-    if (prevProps.asin !== this.props.asin) {
-      fetchComments();
-      console.log("siamo in componentDidUpdate e stiamo fetchando");
-    } else {
-      console.log("siamo in componentDidUpdate ma senza più fetch");
-    }
+  useEffect(() => {
+    fetchComments();
   });
 
   return (
     <div className="text-center">
       <h2>CommentArea</h2>
       {isError && <Error />}
-      <AddComment asin={this.props.asin} />
+      <AddComment asin={param} />
       {isLoading && <Loading />}
 
       {!isLoading && !isFirstLoad && comments.length === 0 ? (

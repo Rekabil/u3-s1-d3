@@ -19,7 +19,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/tvshows" element={<TvShows />} />
-          <Route path="/movie-details" element={<MovieDetails />} />
+          <Route path="/movie-details/:id" element={<MovieDetails />} />
         </Routes>
 
         <MyFooter />
